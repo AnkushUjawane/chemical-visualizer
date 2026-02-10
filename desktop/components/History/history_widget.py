@@ -14,33 +14,36 @@ class HistoryWidget(QWidget):
                 background-color: white;
             }
             QLabel {
-                font-size: 14px;
+                font-size: 1.2rem;
                 color: #212529;
             }
             QTableWidget {
                 background-color: white;
                 border: 1px solid #dee2e6;
-                border-radius: 6px;
+                border-radius: 10px;
                 gridline-color: #e9ecef;
-                font-size: 13px;
+                font-size: 1rem;
+                margin: 0px;
+                padding: 0px;
             }
             QTableWidget::item {
-                padding: 12px;
+                margin: 0px;
+                padding: 0px;
                 color: #212529;
             }
             QHeaderView::section {
                 background-color: #495057;
                 color: white;
-                padding: 14px;
+                padding: 10px;
                 font-weight: 600;
-                font-size: 13px;
+                font-size: 1rem;
                 border: none;
             }
             QPushButton {
                 padding: 10px 20px;
-                font-size: 14px;
+                font-size: 1rem;
                 border: none;
-                border-radius: 6px;
+                border-radius: 10px;
                 color: white;
                 font-weight: 500;
             }
@@ -53,8 +56,8 @@ class HistoryWidget(QWidget):
         layout.setContentsMargins(15, 15, 15, 15)
         
         header = QLabel('Upload History (Last 5)')
-        header.setFont(QFont('Arial', 15, QFont.Bold))
-        header.setStyleSheet('color: #212529; margin-bottom: 15px;')
+        header.setFont(QFont("Rajdhani", 17, QFont.Bold))
+        header.setStyleSheet('color: #212529; margin-bottom: 20px;')
         
         self.table = QTableWidget()
         self.table.setColumnCount(4)
@@ -79,7 +82,7 @@ class HistoryWidget(QWidget):
             self.table.setItem(i, 2, QTableWidgetItem(str(ds['total_count'])))
             
             view_btn = QPushButton('View')
-            view_btn.setStyleSheet('background-color: #007bff; padding: 10px; font-size: 13px; min-width: 80px; max-width: 100px;')
+            view_btn.setStyleSheet('background-color: #007bff; padding: 10px; font-size: 1rem; min-width: 100px; max-width: 120px;')
             view_btn.clicked.connect(lambda checked, ds_id=ds['id']: self.on_view(ds_id))
             self.table.setCellWidget(i, 3, view_btn)
         
