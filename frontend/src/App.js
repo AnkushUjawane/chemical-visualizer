@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import Login from './components/Login';
+import Header from './components/Header';
+import UploadSection from './components/UploadSection';
+import DatasetHistory from './components/DatasetHistory';
+import DatasetDetails from './components/DatasetDetails';
 import './App.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -35,7 +39,7 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${API_URL}/login/`, { username, password });
+      await axios.post(`${API_URL}/login/`, { username, password });
       const userData = { username, password };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -116,124 +120,33 @@ function App() {
 
   if (!user) {
     return (
-      <div className="App">
-        <h1>Chemical Equipment Visualizer</h1>
-        <div className="auth-form">
-          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <button onClick={handleLogin}>Login</button>
-          <button onClick={handleRegister}>Register</button>
-        </div>
-      </div>
+      <Login
+        username={username}
+        password={password}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        onLogin={handleLogin}
+        onRegister={handleRegister}
+      />
     );
   }
 
   return (
     <div className="App">
-      <header>
-        <h1>Chemical Equipment Visualizer</h1>
-        <div>
-          <span>Welcome, {user.username}</span>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </header>
+      <Header username={user.username} onLogout={handleLogout} />
+      
+      <UploadSection 
+        onFileChange={(e) => setFile(e.target.files[0])} 
+        onUpload={handleUpload} 
+      />
 
-      <div className="upload-section">
-        <input type="file" accept=".csv" onChange={(e) => setFile(e.target.files[0])} />
-        <button onClick={handleUpload}>Upload CSV</button>
-      </div>
+      <DatasetHistory 
+        datasets={datasets} 
+        onView={handleViewDataset} 
+        onDownloadPDF={handleDownloadPDF} 
+      />
 
-      <div className="datasets-section">
-        <h2>Upload History (Last 5)</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th>Upload Date</th>
-              <th>Total Count</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {datasets.map((ds) => (
-              <tr key={ds.id}>
-                <td>{ds.filename}</td>
-                <td>{new Date(ds.uploaded_at).toLocaleString()}</td>
-                <td>{ds.total_count}</td>
-                <td>
-                  <button onClick={() => handleViewDataset(ds.id)}>View</button>
-                  <button onClick={() => handleDownloadPDF(ds.id)}>PDF</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {selectedDataset && (
-        <div className="details-section">
-          <h2>Dataset Details: {selectedDataset.filename}</h2>
-          
-          <div className="summary">
-            <h3>Summary Statistics</h3>
-            <p>Total Equipment: {selectedDataset.total_count}</p>
-            <p>Average Flowrate: {selectedDataset.avg_flowrate.toFixed(2)}</p>
-            <p>Average Pressure: {selectedDataset.avg_pressure.toFixed(2)}</p>
-            <p>Average Temperature: {selectedDataset.avg_temperature.toFixed(2)}</p>
-          </div>
-
-          <div className="charts">
-            <div className="chart">
-              <h3>Equipment Type Distribution</h3>
-              <Pie data={{
-                labels: Object.keys(selectedDataset.type_distribution),
-                datasets: [{
-                  data: Object.values(selectedDataset.type_distribution),
-                  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
-                }]
-              }} />
-            </div>
-
-            <div className="chart">
-              <h3>Average Parameters</h3>
-              <Bar data={{
-                labels: ['Flowrate', 'Pressure', 'Temperature'],
-                datasets: [{
-                  label: 'Average Values',
-                  data: [selectedDataset.avg_flowrate, selectedDataset.avg_pressure, selectedDataset.avg_temperature],
-                  backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
-                }]
-              }} />
-            </div>
-          </div>
-
-          <div className="equipment-table">
-            <h3>Equipment List</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Flowrate</th>
-                  <th>Pressure</th>
-                  <th>Temperature</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedDataset.equipment.map((eq, idx) => (
-                  <tr key={idx}>
-                    <td>{eq.name}</td>
-                    <td>{eq.type}</td>
-                    <td>{eq.flowrate}</td>
-                    <td>{eq.pressure}</td>
-                    <td>{eq.temperature}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {selectedDataset && <DatasetDetails dataset={selectedDataset} />}
     </div>
   );
 }
