@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-import Login from './components/Login';
-import Header from './components/Header';
-import UploadSection from './components/UploadSection';
-import DatasetHistory from './components/DatasetHistory';
-import DatasetDetails from './components/DatasetDetails';
+import Login from './components/Login/Login';
+import Header from './components/Header/Header';
+import UploadSection from './components/UploadSection/UploadSection';
+import DatasetHistory from './components/DatasetHistory/DatasetHistory';
+import DatasetDetails from './components/DatasetDetails/DatasetDetails';
 import './App.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
