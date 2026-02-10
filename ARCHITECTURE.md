@@ -116,11 +116,19 @@ TECHNOLOGY STACK
 ┌─────────────────────────────────────────────────────────────┐
 │                    FRONTEND LAYER                            │
 ├──────────────────────────┬──────────────────────────────────┤
-│ Web                      │ Desktop                          │
+│ Web (React.js)           │ Desktop (PyQt5)                  │
 │ • React.js 18.x          │ • PyQt5 5.15.10                  │
 │ • Chart.js 4.x           │ • Matplotlib 3.8.2               │
 │ • Axios                  │ • Requests                       │
-│ • CSS3                   │ • Qt Widgets                     │
+│ • Component-based        │ • Component-based                │
+│   - Login/               │   - Login/                       │
+│   - Header/              │   - Header/                      │
+│   - UploadSection/       │   - Upload/                      │
+│   - DatasetHistory/      │   - History/                     │
+│   - Charts/              │   - Data/                        │
+│   - DatasetDetails/      │   - Chart/                       │
+│ • Each component has     │ • Each component has             │
+│   separate CSS file      │   inline styling                 │
 └──────────────────────────┴──────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐

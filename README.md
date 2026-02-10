@@ -26,19 +26,37 @@ A hybrid Web + Desktop application for visualizing and analyzing chemical equipm
 ```
 chemical-visualizer/
 ├── backend/                 # Django backend
-│   ├── api/                # API app
+│   ├── api/                # API app (models, views, serializers)
 │   ├── config/             # Django settings
 │   ├── venv/               # Python virtual environment
 │   ├── requirements.txt
 │   └── manage.py
 ├── frontend/               # React web app
 │   ├── src/
+│   │   ├── components/     # Modular components
+│   │   │   ├── Login/      # Login.js + Login.css
+│   │   │   ├── Header/     # Header.js + Header.css
+│   │   │   ├── UploadSection/
+│   │   │   ├── DatasetHistory/
+│   │   │   ├── Charts/
+│   │   │   └── DatasetDetails/
+│   │   ├── App.js
+│   │   └── App.css
 │   ├── public/
 │   └── package.json
 ├── desktop/                # PyQt5 desktop app
-│   ├── app.py
+│   ├── components/         # Modular components
+│   │   ├── Login/          # login_widget.py (with styling)
+│   │   ├── Header/         # header_widget.py (with styling)
+│   │   ├── Upload/         # upload_widget.py (with styling)
+│   │   ├── History/        # history_widget.py (with styling)
+│   │   ├── Data/           # data_widget.py (with styling)
+│   │   └── Chart/          # chart_widget.py
+│   ├── app.py              # Main application
 │   └── requirements.txt
-└── sample_equipment_data.csv
+├── sample_equipment_data.csv
+├── README.md
+└── ARCHITECTURE.md
 ```
 
 ## Setup Instructions
@@ -95,11 +113,13 @@ cd desktop
 
 2. Install dependencies:
 ```bash
+export PATH="/home/Project/chemical-visualizer/backend/venv/bin:$PATH"
 pip install -r requirements.txt
 ```
 
 3. Run the desktop application:
 ```bash
+export PATH="/home/Project/chemical-visualizer/backend/venv/bin:$PATH"
 python app.py
 ```
 
@@ -155,6 +175,9 @@ Heat Exchanger-C3,Heat Exchanger,175.3,30.5,220.0
 - SQLite database stores all data
 - Last 5 datasets are automatically maintained per user
 - Both frontends consume the same REST API
+- **Modular Architecture**: Both web and desktop apps use component-based structure
+- **Component Styling**: Each component contains its own styling code
+- **Persistent Login**: Desktop app saves credentials locally
 
 ## Running All Components
 
