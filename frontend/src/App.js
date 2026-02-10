@@ -23,8 +23,9 @@ function App() {
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      fetchDatasets();
+      const userData = JSON.parse(savedUser);
+      setUser(userData);
+      fetchDatasets(userData);
     }
   }, []);
 
@@ -56,10 +57,11 @@ function App() {
     setSelectedDataset(null);
   };
 
-  const fetchDatasets = async () => {
+  const fetchDatasets = async (userData) => {
+    const authUser = userData || user;
     try {
       const response = await axios.get(`${API_URL}/datasets/`, {
-        auth: { username: user?.username || username, password: user?.password || password }
+        auth: { username: authUser.username, password: authUser.password }
       });
       setDatasets(response.data);
     } catch (error) {

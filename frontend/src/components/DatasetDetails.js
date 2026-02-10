@@ -1,5 +1,6 @@
 import React from 'react';
 import Charts from './Charts';
+import './DatasetDetails.css';
 
 function DatasetDetails({ dataset }) {
   return (

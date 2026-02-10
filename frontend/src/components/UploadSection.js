@@ -1,4 +1,5 @@
 import React from 'react';
+import './UploadSection.css';
 
 function UploadSection({ onFileChange, onUpload }) {
   return (

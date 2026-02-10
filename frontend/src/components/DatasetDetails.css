@@ -1,0 +1,17 @@
+.details-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 5px;
+}
+
+.summary {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border-radius: 5px;
+}
+
+.equipment-table {
+  margin-top: 20px;
+}

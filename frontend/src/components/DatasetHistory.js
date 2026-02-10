@@ -1,4 +1,5 @@
 import React from 'react';
+import './DatasetHistory.css';
 
 function DatasetHistory({ datasets, onView, onDownloadPDF }) {
   return (

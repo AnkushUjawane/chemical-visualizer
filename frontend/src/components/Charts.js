@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
+import './Charts.css';
 
 function Charts({ dataset }) {
   return (
