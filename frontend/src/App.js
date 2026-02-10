@@ -44,7 +44,7 @@ function App() {
       const userData = { username, password };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
-      fetchDatasets();
+      fetchDatasets(userData);
     } catch (error) {
       alert('Login failed: ' + (error.response?.data?.error || 'Unknown error'));
     }

@@ -3,7 +3,7 @@ import './Login.css';
 
 function Login({ username, password, setUsername, setPassword, onLogin, onRegister }) {
   return (
-    <div className="App">
+    <div className="login">
       <h1>Chemical Equipment Visualizer</h1>
       <div className="auth-form">
         <input 
